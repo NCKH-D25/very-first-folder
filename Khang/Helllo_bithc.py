@@ -1,0 +1,2 @@
+something="helo"
+print(something)
