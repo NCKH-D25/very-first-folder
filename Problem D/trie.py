@@ -12,7 +12,7 @@ Classes:
               frequency-based node tracking.
 """
 
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Tuple
 
 
 class TrieNode:
@@ -87,3 +87,77 @@ class CharTrie:
         for child in node.children.values():
             count += self.count_nodes(child)
         return count
+    
+    def predict_wildcard(self, pattern: str, limit: int = 50) -> List[str]:
+        """
+        Traverse the Trie recursively to find all valid words matching a pattern
+        containing wildcard characters ('_' or '?').
+
+        Architectural Note (Phase 2 Pruning & Ranking):
+            1. Branch Pruning: Branches that do not match literal characters
+               terminate immediately without further recursive calls.
+            2. Memory Efficiency: Utilizes a mutable character list (backtracking)
+               instead of immutable string concatenation during recursion to
+               prevent excessive object allocation overhead in Python.
+            3. Deterministic Ranking: Results are sorted primarily by absolute
+               frequency (descending) and secondarily by alphabetical order
+               (ascending) to resolve frequency ties.
+
+        Args:
+            pattern (str): The search pattern containing literals and wildcards.
+            limit (int, optional): Maximum number of results to return, preventing
+                                   UI/terminal flooding. Defaults to 50.
+
+        Returns:
+            List[str]: A ranked list of valid English words matching the pattern.
+        """
+        results: List[Tuple[str, int]] = []
+        current_path: List[str] = []
+        pattern = pattern.lower()
+
+        self._search_recursive(self.root, pattern, 0, current_path, results)
+
+        # Sort: Primary by frequency (descending), Secondary by word (ascending)
+        results.sort(key=lambda x: (-x[1], x[0]))
+
+        # Extract only the words, truncated to the requested limit
+        return [word for word, _ in results[:limit]]
+
+    def _search_recursive(
+        self,
+        node: TrieNode,
+        pattern: str,
+        index: int,
+        current_path: List[str],
+        results: List[Tuple[str, int]]
+    ) -> None:
+        """
+        Internal recursive helper executing depth-first search (DFS) with
+        backtracking and natural Trie pruning.
+        """
+        # Base Case: Reached the end of the input pattern length
+        if index == len(pattern):
+            if node.is_end_of_word:
+                results.append(("".join(current_path), node.frequency))
+            return
+
+        char = pattern[index]
+
+        # Case 1: Wildcard character -> Branch into all existing child nodes
+        if char in ('_', '?'):
+            for child_char, child_node in node.children.items():
+                current_path.append(child_char)
+                self._search_recursive(
+                    child_node, pattern, index + 1, current_path, results
+                )
+                current_path.pop()  # Backtrack
+
+        # Case 2: Literal character -> Follow specific path or terminate early
+        elif char in node.children:
+            current_path.append(char)
+            self._search_recursive(
+                node.children[char], pattern, index + 1, current_path, results
+            )
+            current_path.pop()  # Backtrack
+
+        # Case 3: Literal character not in Trie -> Branch dies naturally (Pruning)
