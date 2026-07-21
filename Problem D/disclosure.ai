@@ -21,3 +21,11 @@ Prompt(s): "Provide an engineering implementation reference for the recursive wi
 Output summary: Complete code implementation of DFS recursive traversal utilizing mutable character arrays for backtracking, natural Trie branch pruning for wildcard expansion, and lambda-based composite sorting (-frequency, alphabetical) for tie-breaking.
 What I kept vs. changed: Used the AI-generated recursive DFS algorithm and backtracking logic as-is to prevent string immutability overhead during deep tree traversal. Kept the lambda sorting implementation unchanged as it perfectly satisfies our Phase 2 requirement for deterministic frequency ranking and alphabetical tie resolution.
 Files/functions touched: trie.py: CharTrie.predict_wildcard(), CharTrie._search_recursive()
+
+### Entry 4
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "Provide an engineering reference implementation for main.py to serve as the CLI loop and File I/O parser for Problem D. How should Cold Boot time be benchmarked to strictly prove compliance with the Phase 3 (< 2.0 seconds) threshold, and what is the standard exception handling pattern for missing or malformed vocabulary files?"
+Output summary: Complete code implementation for main.py incorporating high-precision benchmarking via time.perf_counter(), robust CSV-like parsing with malformed line skipping, and an interactive terminal interface supporting wildcard queries and clean exit commands.
+What I kept vs. changed: Used the AI-generated main.py code as-is. I manually verified that the exception handling correctly prevents system crashes on malformed data rows, and tested the time.perf_counter() benchmarking logic to confirm our Cold Boot execution consistently registers below the 2.0-second Phase 3 requirement.
+Files/functions touched: main.py: load_dataset(), run_cli(), main()
