@@ -1,0 +1,7 @@
+### Entry 1
+Tool: Gemini 3.1 Pro
+Date: 21/07/2026
+Prompt(s): Tư vấn cấu trúc vòng lặp cho Vòng 1 và Vòng 2 của Gameplay, quy luật Anti-Exploit.
+Output summary: Khung code gameplay_duong.py với các hàm get_valid_input(), play_round_1() và play_round_2()
+What I kept vs. changed: Giữ nguyên logic tách hàm, tự sửa lại các câu text in ra màn hình cho phù hợp với thiết kế của nhóm.
+Files/functions touched: Problem B/gameplay_duong.py
