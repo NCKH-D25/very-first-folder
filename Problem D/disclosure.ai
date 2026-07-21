@@ -29,3 +29,11 @@ Prompt(s): "Provide an engineering reference implementation for main.py to serve
 Output summary: Complete code implementation for main.py incorporating high-precision benchmarking via time.perf_counter(), robust CSV-like parsing with malformed line skipping, and an interactive terminal interface supporting wildcard queries and clean exit commands.
 What I kept vs. changed: Used the AI-generated main.py code as-is. I manually verified that the exception handling correctly prevents system crashes on malformed data rows, and tested the time.perf_counter() benchmarking logic to confirm our Cold Boot execution consistently registers below the 2.0-second Phase 3 requirement.
 Files/functions touched: main.py: load_dataset(), run_cli(), main()
+
+### Entry 5
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "How can we engineer an automated data pipeline in setup_data.py to generate a hyper-comprehensive dataset (~370,000 words covering modern, archaic, technical, and medical vocabulary) that maintains accurate real-world frequency ranking for UX autocomplete without artificial noise?"
+Output summary: Complete code implementation for a hybrid data enrichment pipeline in setup_data.py. The script cross-references dwyl's 370k master English dictionary with Dr. Peter Norvig's Google Web Trillion Word Corpus (norvig.com/ngrams/count_1w.txt). Words present in the Google corpus receive actual real-world usage counts, while rare/specialized valid dictionary words receive deterministic low baseline frequencies (5-50) to preserve 100% lexical recall without skewing search result rankings.
+What I kept vs. changed: Used the AI-generated hybrid enrichment script as-is. Executed the pipeline to build our local master ~370,000-word dataset.txt file. Verified via main.py that our CharTrie loads the entire comprehensive vocabulary in ~1.3 seconds, successfully achieving Scrabble-level lexical recall with industry-standard Google frequency sorting while strictly beating the Phase 3 Cold Boot threshold (< 2.0s).
+Files/functions touched: setup_data.py: fetch_master_vocabulary(), fetch_norvig_frequencies(), build_hyper_dataset()
