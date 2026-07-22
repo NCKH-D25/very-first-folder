@@ -1,0 +1,22 @@
+Tool: Gemini 3.6 Flash
+Date: 22/7/2026 5:12 PM
+Prompt: Fix the error when opening Data_PEN.txt with try and except.
+Output Summary: A new code with fixed try, except and with open("Data_PEN.txt", "r") as f:
+What I Modified:
+    Before: 
+        try with open("Data_PEN.txt", "r") as f:
+            Data = f.readlines()
+        except FileNotExisted:
+            print("The file is not existed!")
+        except Exception as e:
+            print("An unexception error is occurred!")
+    After:
+        try:
+            with open("Data_PEN.txt", "r") as f:
+                Data = f.readlines()
+        except FileNotFoundError:
+            print("The file is not existed!")
+        except Exception as e:
+            print("An unexception error is occurred!")
+File/Function touched: Main.py, try, except and file handling Function
+
