@@ -1,0 +1,6 @@
+## Entry 1
+Tool: Gemini 3.5 Flash_Lite
+Date: 23/07/2026
+Promts: Give a text Problem A, translate it into Vietnamese language and analyse it
+Output Summary: The A.I tool provides the Problem A by Vietnamese language and analyse: 
+First, build the Tokenization & Sliding Window Pipeline. Next, implement the Word-Level Trie Structure. Finally, develop the predict_next() Function with Tie-Breaking Logic
