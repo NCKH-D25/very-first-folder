@@ -18,3 +18,10 @@ Date: 22/7/2026
 Prompt(s): Dựa vào tài liệu sau, lên kế hoạch các trạng thái của cả team và nhiệm vụ cho từng thành viên: <Tài liệu chứa dữ liệu được tạo từ Entry 2>
 What I kept vs. changed: Bổ sung thêm nhiệm vụ, chuyển đổi vài nhiệm vụ bị sai vai trò
 Files/functions touched: <readme.md> : Tạo giai đoạn và nhiệm vụ của từng thành viên trong giai đoạn đó
+
+### Entry 4
+Tool: Gemini Pro 3.1
+Date: 24/7/2026
+Prompt(s): Dựa vào tài liệu readme.md được đính kèm, viết lại định dạng markdown utf-8.
+What I kept vs. changed: Bổ sung thêm các thông tin và vẽ meirmaid cho Counter
+Files/functions touched: <readme.md> : Đổi thành file mới cùng tên và viết dưới định dạng markdown
