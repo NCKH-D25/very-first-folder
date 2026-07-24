@@ -1,3 +1,5 @@
+from tries import *
+
 #Varibles
 Data =[]
 Words = []
@@ -6,7 +8,7 @@ Max_Error = 2
 
 #File hanlding
 try:
-    with(open("Data_PEN.txt", "r")) as f:
+    with(open("Dictionary.txt", "r")) as f:
         Data = f.readlines()
 except FileNotFoundError:
     print("The file is not existed!")
@@ -32,13 +34,19 @@ for lines in Data:
             print("The weight must be a positive integer!")
             continue
         else:
-            print(clean_line[:-1])
+            # print(clean_line[:-1])
             Available_Weight.append(Current_Weight)
             Completed_Word = " ".join(clean_line[:-1]).lower()
             Words.append(Completed_Word)
 
 #Print the Output    
-print(Words)
-print(Available_Weight)
-    
+# print(Words)
+# print(Available_Weight)
+        
+trie = Trie()
 
+for i in range(50000):
+    trie.insert(Words[i], Available_Weight[i])
+    
+ip3 = "we"
+print(trie.autocomplete(ip3))
