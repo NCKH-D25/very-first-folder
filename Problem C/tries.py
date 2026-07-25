@@ -68,8 +68,10 @@ class Trie:
         candidates = []
         self._fuzzy_search_recursive(node=self.root, word=word, index=0,errors=0,current_word="",max_errors=max_errors,candidates=candidates)
 
+        #Soring Leastest Error and Most Frequency
+        candidates.sort(key=lambda item: (item['errors'], -item['frequency']))
         # only get top k results
-        return candidates[:top_k]
+        return[item['word'] for item in candidates[:top_k]]
 
     def _fuzzy_search_recursive(self,node: Trienode,word: str,index: int,errors: int,current_word: str,max_errors: int,candidates: list):
         # stop
