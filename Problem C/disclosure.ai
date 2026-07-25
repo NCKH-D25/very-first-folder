@@ -20,3 +20,10 @@ What I Modified:
             print("An unexception error is occurred!")
 File/Function touched: Main.py, try, except and file handling Function
 
+### Fuzzy Machine
+Tool: ChatGPT-5.5
+Date: 24/7/2026
+Prompt: I understand the basic Trie, but I still can't figure out the core idea behind fuzzy traversal. I don't know how the algorithm's state should be structured when a character doesn't match, so that it can handle insertion, deletion, and substitution.
+Output Summary: Explained that the problem can be divided into three smaller parts: 1. What state is the search currently in? 2. What choices are available from that state? 3. Insertion, deletion, and substitution are simply transitions. When handling an incorrect character, the algorithm needs to branch into different cases for insertion, deletion, and substitution.
+What I Modified: Used the explanation as a reference and implemented the transitions in code.
+File/Function touched: trie.py, _fuzzy_search_recursive()
