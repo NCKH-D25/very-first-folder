@@ -15,3 +15,10 @@ def clean_tokenize (text):
         data.append((word_1, word_2))
     return data
 
+def read_dataset(filename):
+    """
+    Read the training corpus from file.
+    """
+
+    with open(filename, "r", encoding="utf-8") as file:
+        return file.read()
