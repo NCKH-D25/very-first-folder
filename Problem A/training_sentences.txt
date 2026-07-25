@@ -98,4 +98,4 @@ Effective stress reduction techniques boost daily workplace productivity and foc
 Lifelong learning habits help individuals adapt easily to changing professional environments. 
 Adequate sleep recovery restores cognitive performance and physical stamina after long hours. 
 Financial literacy empowers individuals to budget, save, and invest their money wisely. 
-
+learning python is fun and learning python is useful but learning java is hard
