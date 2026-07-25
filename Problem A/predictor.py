@@ -28,20 +28,18 @@ class WordPredictor:
         """
         self.tree = tree
         self.top_k = top_k
+        self.previous_word = None
 
     def search_node(self, word):
-        """
-        Search for a node matching the input word.
-
-        If the word does not exist, create a new
-        branch from the root and return it.
-        """
 
         node = self.tree.root.children.get(word)
 
         if node is None:
+
+            print(f'"{word}" is not in the training data.')
+
             node = TrieNode(word)
-            node.frequency = 1
+
             self.tree.root.children[word] = node
 
         return node
@@ -111,6 +109,25 @@ class WordPredictor:
         for index, (next_word, frequency) in enumerate(predictions, start=1):
             print(f"{index}. {next_word:<20} ({frequency})")
 
+    def update_history(self, current_word):
+        """
+        Create a new branch based on user input history.
+        """
+
+        if self.previous_word is None:
+            self.previous_word = current_word
+            return
+
+        previous_node = self.search_node(self.previous_word)
+
+        if current_word not in previous_node.children:
+
+            previous_node.children[current_word] = TrieNode(current_word)
+
+        previous_node.children[current_word].frequency += 1
+
+        self.previous_word = current_word
+
     def run(self):
         """
         Start the prediction tool.
@@ -150,5 +167,7 @@ class WordPredictor:
             empty_count = 0
 
             input_history.append(word)
+
+            self.update_history(word)
 
             self.display_prediction(word)
