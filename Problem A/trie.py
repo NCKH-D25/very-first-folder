@@ -1,7 +1,10 @@
 class TrieNode:
     def __init__(self, word=None):
+
         self.word = word
+
         self.children = {}
+
         self.frequency = 0
 
 
