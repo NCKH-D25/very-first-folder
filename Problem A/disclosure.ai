@@ -4,3 +4,100 @@ Date: 23/07/2026
 Promts: Give a text Problem A, translate it into Vietnamese language and analyse it
 Output Summary: The A.I tool provides the Problem A by Vietnamese language and analyse: 
 First, build the Tokenization & Sliding Window Pipeline. Next, implement the Word-Level Trie Structure. Finally, develop the predict_next() Function with Tie-Breaking Logic
+
+
+VĂN THÔNG 
+"
+  ## Entry 1
+  
+  **Tool:** ChatGPT Go
+  **Date:** 20/07
+  
+  **Prompt(s):**
+  "Please translate the project description into Vietnamese and explain it."
+  
+  **Output summary:**
+  The AI provided a complete and easy-to-understand Vietnamese translation of the project description. It also explained the project objectives, clarified the assignment requirements, and outlined the overall approach and problem-solving strategy needed to complete the project.
+  
+  **What I kept vs. changed:**
+  I used the translation and explanations as reference material to better understand the assignment requirements. The output was not copied directly into my report or source code; instead, it was used to guide my implementation.
+  
+  **Files/functions touched:**
+  No file.
+  
+  ---
+  
+  ## Entry 2
+  
+  **Tool:** ChatGPT Go
+  **Date:** 23/07
+  
+  **Prompt(s):**
+  "Please explain the steps required to implement `predictor.py` so that it can perform searching, display suggestions, and interact with the functionality provided in `trie.py`."
+  
+  **Output summary:**
+  The AI outlined the overall implementation process for `predictor.py`, explained how it should interact with `trie.py`, and described the workflow for searching and displaying word suggestions. It also provided several recommendations for organizing functions and structuring the program effectively.
+  
+  **What I kept vs. changed:**
+  I used the AI's suggestions and implementation ideas as references while developing my own solution. I modified the design and implementation to better fit the project's requirements and overall architecture.
+  
+  **Files/functions touched:**
+  `predictor.py`, `trie.py`
+  
+  ---
+  
+  ## Entry 3
+  
+  **Tool:** ChatGPT Go
+  **Date:** 24/07 (Daytime)
+  
+  **Prompt(s):**
+  "In `trie.py` and `predictor.py`, which variables, functions, and statements should be optimized to improve compatibility and overall performance?"
+  
+  **Output summary:**
+  The AI analyzed the structure of both files and identified variables, functions, and code sections that could be improved. It also suggested better naming conventions, function organization, and logic optimizations to enhance compatibility and maintainability.
+  
+  **What I kept vs. changed:**
+  I selectively applied the AI's recommendations and rewrote the relevant parts of the code to ensure the program functioned correctly while meeting the project's requirements.
+  
+  **Files/functions touched:**
+  `predictor.py`, `trie.py`
+  
+  ---
+  
+  ## Entry 4
+  
+  **Tool:** ChatGPT Go
+  **Date:** 24/07 (Evening)
+  
+  **Prompt(s):**
+  "Optimize the project so it can accept multiple input words and display suggestions for each word."
+  
+  **Output summary:**
+  The AI proposed several improvements to support multiple-word input and generate suggestions for each individual word. It also recommended modifications across the project to improve functionality, efficiency, and consistency between different modules.
+  
+  **What I kept vs. changed:**
+  I used the AI's recommendations as implementation references and selectively incorporated the ideas that best matched the project's architecture. Some proposed solutions were adapted or rewritten to ensure compatibility with my existing code.
+  
+  **Files/functions touched:**
+  `predictor.py`, `trie.py`, `preprocess.py`
+  
+  ---
+  
+  ## Entry 5
+  
+  **Tool:** ChatGPT Go
+  **Date:** 25/07
+  
+  **Prompt(s):**
+  "Review the entire project, fix the remaining issues, complete the source code, and update the project documentation."
+  
+  **Output summary:**
+  The AI reviewed the overall project structure, identified remaining issues, and suggested improvements to complete the implementation. It also provided guidance on finalizing the project documentation and ensuring consistency across all project files.
+  
+  **What I kept vs. changed:**
+  I used the AI's feedback as a reference during the final review process. I independently verified, modified, and completed the source code and documentation to satisfy the project requirements.
+  
+  **Files/functions touched:**
+  `predictor.py`, `trie.py`, `preprocess.py`, `README.md`, `corpus.txt`
+"
