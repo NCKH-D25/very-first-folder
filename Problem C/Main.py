@@ -41,8 +41,7 @@ while True:
     else:
         res = trie.fuzzy_search(User_Input)
         res2 = trie.autocomplete(User_Input)
-        print(res)
-        # print(res2)
+
         final_res = max(res[0], res2[0], key = lambda x: x["score"])
         
         if final_res["score"] != 0:
