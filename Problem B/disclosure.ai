@@ -1,7 +1,36 @@
 ### Entry 1
+<<<<<<< HEAD
 Tool: Gemini 3.1 Pro
 Date: 21/07/2026
 Prompt(s): Tư vấn cấu trúc vòng lặp cho Vòng 1 và Vòng 2 của Gameplay, quy luật Anti-Exploit.
 Output summary: Khung code gameplay_duong.py với các hàm get_valid_input(), play_round_1() và play_round_2()
 What I kept vs. changed: Giữ nguyên logic tách hàm, tự sửa lại các câu text in ra màn hình cho phù hợp với thiết kế của nhóm.
 Files/functions touched: Problem B/gameplay_duong.py
+=======
+Tool: Gemini Pro 3.1
+Date: 21/7/2026
+Prompt(s): Dựa vào tài liệu sau, hãy dịch lại và tóm tắt những ý quan trọng, bỏ qua đề cập kiến thức N-Gram và Trie. Tập trung vào luật, workflow và tương tác của các thành viên, Nhóm thực hiện Problem B: <Nội dung của Exam>
+What I kept vs. changed: Loại bỏ 2 phần không cần thiết là các trường hợp ngách và thông tin đã nói ở trong cuộc họp và ở sẵn trong file gốc.
+Files/functions touched: Tạo file Exam Translation.docx
+
+### Entry 2
+Tool: Gemini Pro 3.1
+Date: 21/7/2026
+Prompt(s): Dựa vào tài liệu sau, Đưa ra 5 vai trò với độ khó cân bằng để hoàn thành dự án này. Phân tích tại sao bạn lại chia ra như vậy: <Nội dung của Exam>
+What I kept vs. changed: Loại bỏ phần giải thích của AI, viết tên của thành viên đảm nhiệm vai trò đó.
+Files/functions touched: <readme.md> : Thêm vai trò và tên từng thành viên
+
+### Entry 3
+Tool: Gemini Pro 3.1
+Date: 22/7/2026
+Prompt(s): Dựa vào tài liệu sau, lên kế hoạch các trạng thái của cả team và nhiệm vụ cho từng thành viên: <Tài liệu chứa dữ liệu được tạo từ Entry 2>
+What I kept vs. changed: Bổ sung thêm nhiệm vụ, chuyển đổi vài nhiệm vụ bị sai vai trò
+Files/functions touched: <readme.md> : Tạo giai đoạn và nhiệm vụ của từng thành viên trong giai đoạn đó
+
+### Entry 4
+Tool: Gemini Pro 3.1
+Date: 24/7/2026
+Prompt(s): Dựa vào tài liệu readme.md được đính kèm, viết lại định dạng markdown utf-8.
+What I kept vs. changed: Bổ sung thêm các thông tin và vẽ meirmaid cho Counter
+Files/functions touched: <readme.md> : Đổi thành file mới cùng tên và viết dưới định dạng markdown
+>>>>>>> 1b94e4f3473e671a6241e7723f2cf60cd0946d96
