@@ -87,7 +87,7 @@ flowchart TD
 ## Project Files
 | **File** | **Purpose** |
 | :--- | :--- |
-| main.py | The program's entry point |
+| main.py | Program's entry point |
 | predictor.py | Manages user input |
 | preprocess.py | Tokenizes entry data |
 | training_sentences.txt | Training dataset |
