@@ -39,29 +39,13 @@ while True:
     if User_Input == "" or " " in User_Input or User_Input.isalpha() == False:
         print("Invalid word! Please try again!")
     else:
-        # res = trie.autocomplete(User_Input)
-        # if res:
-        #     print("Do you mean: ", end="")
-        #     print(res[0][0])
-        #     break
-        # else:
-        #     res = trie.fuzzy_search(User_Input)
-        #     if res:
-        #         print("Do you mean: ", end="")
-        #         print("{}".format(res[0]))
-        #         break
-        #     else:
-        #         print("Invalid Word! PLease try again!")
-        
-        
         res = trie.fuzzy_search(User_Input)
         res2 = trie.autocomplete(User_Input)
-        # print(res)
-        # print(res2)
+
         final_res = max(res[0], res2[0], key = lambda x: x["score"])
         
         if final_res["score"] != 0:
             print("Do you mean:", end = " ")
         print(final_res["word"])
         
-        # break
+  
