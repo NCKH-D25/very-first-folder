@@ -1,5 +1,6 @@
 import math
 
+
 class Trienode:
     def __init__(self):
         self.children = {}
@@ -68,11 +69,13 @@ class Trie:
         candidates = []
         self._fuzzy_search_recursive(node=self.root, word=word, index=0,errors=0,current_word="",max_errors=max_errors,candidates=candidates)
 
-        #Soring Leastest Error and Most Frequency
-        candidates.sort(key=lambda item: (item['errors'], -item['frequency']))
-        # only get top k results
-        return[item['word'] for item in candidates[:top_k]]
+        unique = {c["word"]: c for c in sorted(candidates, key=lambda x: x["errors"])}.values()
+        
+        candidates = self.rank_results(list(unique), max_errors)
 
+        # only get top k results
+        return candidates[:top_k]
+    
     def _fuzzy_search_recursive(self,node: Trienode,word: str,index: int,errors: int,current_word: str,max_errors: int,candidates: list):
         # stop
         if errors > max_errors:
@@ -82,6 +85,7 @@ class Trie:
             # if node is end of a word, add to candidates
             if node.is_word:
                 candidates.append({"word": node.word,"errors": errors,"frequency": node.frequency})
+        
 
             # error insertion: add extra characters
             if errors < max_errors:
@@ -154,20 +158,16 @@ class Trie:
     def rank_results(self,candidates: list,max_errors: int):
         if not candidates:
             return candidates
-
         max_frequency = max(candidate["frequency"]
             for candidate in candidates
             )
-
         if max_frequency == 0:
             max_frequency = 1
-
         for candidate in candidates:
             errors = candidate["errors"]
             frequency = candidate["frequency"]
-
             accuracy_score = 1 / (1 + errors)
             popularity_score = (math.log(1 + frequency) / math.log(1 + max_frequency))
-
-        candidates.sort(key=lambda candidate: candidate["errors"])
+            candidate["score"] = accuracy_score * 0.6 + popularity_score * 0.4
+        candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
         return candidates
