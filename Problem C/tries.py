@@ -1,12 +1,12 @@
 import math
 
-
 class Trienode:
     def __init__(self):
         self.children = {}
         self.frequency = 0
         self.is_word = False
         self.word = None
+        
 class Trie:
     def __init__(self):
         self.root = Trienode()
@@ -45,48 +45,51 @@ class Trie:
             node = node.children[char]
         return node
     
-    def collect_words(self, node: Trienode, results: list[(str, int)]):
+    def collect_words(self, node: Trienode, results: dict):
         if node.is_word:
-            results.append((node.word, node.frequency))
+            results.append({"word": node.word, "frequency": node.frequency})    
         for child in node.children.values():
             self.collect_words(child, results)
             
-    def autocomplete(self, prefix: str) -> list[(str, int)]:
+    def autocomplete(self, prefix: str, top_k: int = 5) -> dict:
         node = self.get_node(prefix)
+        
         if node == None:
-            return []
+            return [{"word": "I don't know", "score": 0}]
+        
         results = []
         self.collect_words(node, results)
         #print(results)
+        
+        len_prefix = len(prefix)
+        for fullWord in results: fullWord["errors"] = len(fullWord["word"]) - len_prefix
                     
-        results.sort(key = lambda x: -x[1])
+        results = self.rank_results(results)
         
         #print(results)
-        return results
+        # only get top k results
+        return results[:top_k]
 
     # algorithm
     def fuzzy_search(self, word: str, max_errors: int = 2,top_k: int = 5):
         candidates = []
         self._fuzzy_search_recursive(node=self.root, word=word, index=0,errors=0,current_word="",max_errors=max_errors,candidates=candidates)
-
-        unique = {c["word"]: c for c in sorted(candidates, key=lambda x: x["errors"])}.values()
         
-        candidates = self.rank_results(list(unique), max_errors)
+        candidates = self.rank_results(candidates)
 
         # only get top k results
         return candidates[:top_k]
     
     def _fuzzy_search_recursive(self,node: Trienode,word: str,index: int,errors: int,current_word: str,max_errors: int,candidates: list):
         # stop
-        if errors > max_errors:
-            return
+        # if errors > max_errors:
+        #     return
 
         if index == len(word):
             # if node is end of a word, add to candidates
             if node.is_word:
-                candidates.append({"word": node.word,"errors": errors,"frequency": node.frequency})
+                candidates.append({"word": node.word,"errors": errors, "frequency": node.frequency})
         
-
             # error insertion: add extra characters
             if errors < max_errors:
                 for char, child in node.children.items():
@@ -116,7 +119,7 @@ class Trie:
                 candidates=candidates
             )
         # over error limit
-        if errors >= max_errors:
+        if errors == max_errors:
             return
 
         # thay ký tự (substitution)
@@ -155,19 +158,22 @@ class Trie:
         )
 
     # rank candidates based on accuracy and popularity
-    def rank_results(self,candidates: list,max_errors: int):
+    def rank_results(self, candidates: list[dict]):
         if not candidates:
-            return candidates
-        max_frequency = max(candidate["frequency"]
-            for candidate in candidates
-            )
-        if max_frequency == 0:
-            max_frequency = 1
+            return [{"word": "I don't know", "score": 0}]
+        
+        max_frequency = max(candidate["frequency"] for candidate in candidates)
+        
+        # if max_frequency == 0:
+        #     max_frequency = 1
+            
         for candidate in candidates:
             errors = candidate["errors"]
             frequency = candidate["frequency"]
             accuracy_score = 1 / (1 + errors)
             popularity_score = (math.log(1 + frequency) / math.log(1 + max_frequency))
             candidate["score"] = accuracy_score * 0.6 + popularity_score * 0.4
+            
         candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
+        
         return candidates
