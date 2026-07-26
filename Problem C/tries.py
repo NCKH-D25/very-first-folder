@@ -1,9 +1,13 @@
+import math
+from typing import Optional
+
 class Trienode:
     def __init__(self):
         self.children = {}
         self.frequency = 0
         self.is_word = False
         self.word = None
+        
 class Trie:
     def __init__(self):
         self.root = Trienode()
@@ -34,7 +38,7 @@ class Trie:
             node = node.children[char]
         return True
     
-    def get_node(self, prefix: str) -> Trienode:
+    def get_node(self, prefix: str) -> Optional[Trienode]:
         node = self.root
         for char in prefix:
             if char not in node.children:
@@ -42,21 +46,128 @@ class Trie:
             node = node.children[char]
         return node
     
-    def collect_words(self, node: Trienode, results: list[(str, int)]):
+    def collect_words(self, node: Trienode, results: list[dict]):
         if node.is_word:
-            results.append((node.word, node.frequency))
+            results.append({"word": node.word, "frequency": node.frequency})    
         for child in node.children.values():
             self.collect_words(child, results)
             
-    def autocomplete(self, prefix: str) -> list[(str, int)]:
+    def autocomplete(self, prefix: str, top_k: int = 5) -> list[dict]:
         node = self.get_node(prefix)
+        
         if node == None:
-            return []
+            return [{"word": "I don't know", "score": 0}]
+        
         results = []
         self.collect_words(node, results)
         #print(results)
+        
+        len_prefix = len(prefix)
+        for fullWord in results: fullWord["errors"] = len(fullWord["word"]) - len_prefix
                     
-        results.sort(key = lambda x: -x[1])
+        results = self.rank_results(results)
         
         #print(results)
-        return results
+        # only get top k results
+        return results[:top_k]
+
+    # algorithm
+    def fuzzy_search(self, word: str, max_errors: int = 2,top_k: int = 5) -> list[dict]:
+        candidates = []
+        self._fuzzy_search_recursive(node=self.root, word=word, index=0,errors=0,max_errors=max_errors,candidates=candidates)
+        
+        candidates = self.rank_results(candidates)
+
+        # only get top k results
+        return candidates[:top_k]
+    
+    def _fuzzy_search_recursive(self,node: Trienode,word: str,index: int,errors: int,max_errors: int,candidates: list):
+        # stop
+        # if errors > max_errors:
+        #     return
+
+        if index == len(word):
+            # if node is end of a word, add to candidates
+            if node.is_word:
+                candidates.append({"word": node.word,"errors": errors, "frequency": node.frequency})
+        
+            # error insertion: add extra characters
+            if errors < max_errors:
+                for char, child in node.children.items():
+                    self._fuzzy_search_recursive(
+                        node=child,
+                        word=word,
+                        index=index,
+                        errors=errors + 1,
+                        max_errors=max_errors,
+                        candidates=candidates
+                    )
+            return
+
+        # current input character
+        current_char = word[index]
+
+        # same character
+        if current_char in node.children:
+            self._fuzzy_search_recursive(
+                node=node.children[current_char],
+                word=word,
+                index=index + 1,
+                errors=errors,
+                max_errors=max_errors,
+                candidates=candidates
+            )
+        # over error limit
+        if errors == max_errors:
+            return
+
+        # substitution
+        for char, child in node.children.items():
+            if char != current_char:
+                self._fuzzy_search_recursive(
+                    node=child,
+                    word=word,
+                    index=index + 1,
+                    errors=errors + 1,
+                    max_errors=max_errors,
+                    candidates=candidates
+                )
+
+        # insertion
+        for char, child in node.children.items():
+            self._fuzzy_search_recursive(
+                node=child,
+                word=word,
+                index=index,
+                errors=errors + 1,
+                max_errors=max_errors,
+                candidates=candidates
+            )
+            
+        # deletion
+        self._fuzzy_search_recursive(
+            node=node,
+            word=word,
+            index=index + 1,
+            errors=errors + 1,
+            max_errors=max_errors,
+            candidates=candidates
+        )
+
+    # rank candidates based on accuracy and popularity
+    def rank_results(self, candidates: list[dict]):
+        if not candidates:
+            return [{"word": "I don't know", "score": 0}]
+        
+        max_frequency = max(candidate["frequency"] for candidate in candidates)
+            
+        for candidate in candidates:
+            errors = candidate["errors"]
+            frequency = candidate["frequency"]
+            accuracy_score = 1 / (1 + errors)
+            popularity_score = (math.log(1 + frequency) / math.log(1 + max_frequency))
+            candidate["score"] = accuracy_score * 0.6 + popularity_score * 0.4
+            
+        candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
+        
+        return candidates

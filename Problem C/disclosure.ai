@@ -1,5 +1,6 @@
+### File_Handling
 Tool: Gemini 3.6 Flash
-Date: 22/7/2026 5:12 PM
+Date: 22/7/2026 
 Prompt: Fix the error when opening Data_PEN.txt with try and except.
 Output Summary: A new code with fixed try, except and with open("Data_PEN.txt", "r") as f:
 What I Modified:
@@ -20,3 +21,75 @@ What I Modified:
             print("An unexception error is occurred!")
 File/Function touched: Main.py, try, except and file handling Function
 
+### Trie
+Tool: ChatGPT 5.5
+Date: 23/07/2026
+Prompt(s): "(Provided the problem statement) I was assigned to build a Trie. I have already built the Trie structure using the insert() function. Now I want to complete the Trie implementation, but I am not sure which functions I should add next. Please suggest the necessary functions and explain the purpose of each function so that I can implement them myself."
+Output summary: ChatGPT suggested the functions search(), starts_with(), get_node(), and collect_words(), and explained the purpose of each function and how they support searching and traversing data in the Trie.
+
+What I Modified:
+	Before: 
+		I had only built the Trie structure and added data using insert().
+	After: 
+		I identified the necessary functions to add to the Trie and implemented search(), starts_with(), and get_node() myself.
+	    Files/functions touched: trie.py: search(), starts_with(), 	get_node()
+
+### Trie
+Tool: ChatGPT 5.5
+Date: 24/07/2026
+Prompt(s): "I have built the Trie structure and completed the basic functions such as insert(), search(), starts_with(), and get_node(). Now I want to understand collect_words() better. I understand that I need to traverse the child nodes from the current node, but I am not sure how DFS and recursion work to retrieve all the words in the branches. Please explain how collect_words() works and provide a short code example to help me understand it"
+Output summary: ChatGPT explained how `collect_words()` uses DFS and recursion to traverse the child nodes, check `is_word`, and collect words together with their frequencies. ChatGPT provided the following short code example to demonstrate the basic DFS algorithm:
+def collect_words(self, node, results):
+    if node.is_word:
+        results.append((node.word, node.frequency))
+    for child in node.children.values():
+        self.collect_words(child, results)
+After explaining the code and the DFS traversal, ChatGPT suggested building an autocomplete() function using get_node() together with collect_words().
+What I Modified:
+	Before: 
+		I could not clearly visualize how collect_words() works or how DFS traverses the branches of the Trie.
+	After: 
+		I modified and completed collect_words() based on the explanation and built the autocomplete() function by combining get_node() and collect_words()`.
+	Files/functions touched: trie.py: collect_words(), autocomplete()
+
+### Fuzzy Machine
+Tool: ChatGPT-5.5
+Date: 24/7/2026
+Prompt: I understand the basic Trie, but I still can't figure out the core idea behind fuzzy traversal. I don't know how the algorithm's state should be structured when a character doesn't match, so that it can handle insertion, deletion, and substitution.
+Output Summary: Explained that the problem can be divided into three smaller parts: 1. What state is the search currently in? 2. What choices are available from that state? 3. Insertion, deletion, and substitution are simply transitions. When handling an incorrect character, the algorithm needs to branch into different cases for insertion, deletion, and substitution.
+What I Modified: Used the explanation as a reference and implemented the transitions in code.
+File/Function touched: trie.py, _fuzzy_search_recursive()
+
+### User_Input_Handling
+Tool: Gemini 3.6 Flash
+Date: 25/7/2026
+Prompt: Uploaded "Main.py" and "tries.py". If an user input like "qwroi", I want to force them to do input again because it a trash word not a properly word.
+Ouput Summary: A small code change to force the user to do input again if the word is trash or not a prefix of any word.
+What I Modified:
+    I keep the previous code, and I only add this in the while loop:
+        elif not trie.starts_with(User_Input):
+            print("Invaild word! Please try again!")
+File/Function touched: Main.py, while Loop
+
+### Fuzzy Machine
+Tool: Gemini 3.6 Flash
+Date: 25/7/2026
+Prompt: Fix the logical bug in fuzzy_search function (priorites leastest error and highest frequency)
+Output: A Solution code for logical ranking leatest error and highest frequency.
+What I Modified:
+    Before:
+        #Only get top k results
+        return candidates[:top_k]
+    After: 
+        #Priorites leastest error and highest frequency
+        candidates.sort(key=lambda item: (item['errors'], -item['frequency']))
+        return [item['word'] for item in candidates[:top_k]]
+File/Function touched: trie.py, fuzzy_search()
+
+      
+### Flowchart
+Tool: Gemini 3.6 Flash
+Date: 26/7/2026
+Prompt: Uploaded "Main.py" and "tries.py". Build a flowchart to show the main process of the code
+Output: A Solution code written in Mermaid.js for a comprehensive flowchart showing the overall flow of the code, from loading the dictionary to handling user input and displaying the suggested word.
+Intention: A reference for my flowchart to make sure it cover all the necessary steps.
