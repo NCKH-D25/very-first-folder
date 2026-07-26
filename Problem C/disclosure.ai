@@ -1,5 +1,6 @@
+### File_Handling
 Tool: Gemini 3.6 Flash
-Date: 22/7/2026 5:12 PM
+Date: 22/7/2026 
 Prompt: Fix the error when opening Data_PEN.txt with try and except.
 Output Summary: A new code with fixed try, except and with open("Data_PEN.txt", "r") as f:
 What I Modified:
@@ -27,3 +28,30 @@ Prompt: I understand the basic Trie, but I still can't figure out the core idea 
 Output Summary: Explained that the problem can be divided into three smaller parts: 1. What state is the search currently in? 2. What choices are available from that state? 3. Insertion, deletion, and substitution are simply transitions. When handling an incorrect character, the algorithm needs to branch into different cases for insertion, deletion, and substitution.
 What I Modified: Used the explanation as a reference and implemented the transitions in code.
 File/Function touched: trie.py, _fuzzy_search_recursive()
+
+### User_Input_Handling
+Tool: Gemini 3.6 Flash
+Date: 25/7/2026
+Prompt: Uploaded "Main.py" and "tries.py". If an user input like "qwroi", I want to force them to do input again because it a trash word not a properly word.
+Ouput Summary: A small code change to force the user to do input again if the word is trash or not a prefix of any word.
+What I Modified:
+    I keep the previous code, and I only add this in the while loop:
+        elif not trie.starts_with(User_Input):
+            print("Invaild word! Please try again!")
+File/Function touched: Main.py, while Loop
+
+### Fuzzy Machine
+Tool: Gemini 3.6 Flash
+Date: 25/7/2026
+Prompt: Fix the logical bug in fuzzy_search function (priorites leastest error and highest frequency)
+What I Modified:
+    Before:
+        #Only get top k results
+        return candidates[:top_k]
+    After: 
+        #Priorites leastest error and highest frequency
+        candidates.sort(key=lambda item: (item['errors'], -item['frequency']))
+        return [item['word'] for item in candidates[:top_k]]
+File/Function touched: trie.py, fuzzy_search()
+
+        
