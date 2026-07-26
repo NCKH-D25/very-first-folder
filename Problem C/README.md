@@ -9,7 +9,7 @@
 | README.md | Documentation describing the project and its usage. |
 
 ## Flowchart
-''''Mermaid
+```mermaid
 flowchart LR
     %%Class init
     classDef startEnd fill:#f9f,stroke:#333,stroke-width:2px;
@@ -72,3 +72,4 @@ flowchart LR
     class D Error;
     class G,I,J,O decision;
     class B,C,E,K,L,M,N,P,Result,Sort,Output,Combine,Print,Positive_Score,Result_1,Result_2 process;
+```
