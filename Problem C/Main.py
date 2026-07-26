@@ -45,6 +45,6 @@ while True:
         final_res = max(res[0], res2[0], key = lambda x: x["score"])
         
         if final_res["score"] != 0:
-            print("Do you mean:git", end = " ")
+            print("Do you mean:", end = " ")
         print(final_res["word"])
         
