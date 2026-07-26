@@ -1,4 +1,5 @@
 import math
+from typing import Optional
 
 class Trienode:
     def __init__(self):
@@ -37,7 +38,7 @@ class Trie:
             node = node.children[char]
         return True
     
-    def get_node(self, prefix: str) -> Trienode:
+    def get_node(self, prefix: str) -> Optional[Trienode]:
         node = self.root
         for char in prefix:
             if char not in node.children:
@@ -45,13 +46,13 @@ class Trie:
             node = node.children[char]
         return node
     
-    def collect_words(self, node: Trienode, results: dict):
+    def collect_words(self, node: Trienode, results: list[dict]):
         if node.is_word:
             results.append({"word": node.word, "frequency": node.frequency})    
         for child in node.children.values():
             self.collect_words(child, results)
             
-    def autocomplete(self, prefix: str, top_k: int = 5) -> dict:
+    def autocomplete(self, prefix: str, top_k: int = 5) -> list[dict]:
         node = self.get_node(prefix)
         
         if node == None:
@@ -71,16 +72,16 @@ class Trie:
         return results[:top_k]
 
     # algorithm
-    def fuzzy_search(self, word: str, max_errors: int = 2,top_k: int = 5):
+    def fuzzy_search(self, word: str, max_errors: int = 2,top_k: int = 5) -> list[dict]:
         candidates = []
-        self._fuzzy_search_recursive(node=self.root, word=word, index=0,errors=0,current_word="",max_errors=max_errors,candidates=candidates)
+        self._fuzzy_search_recursive(node=self.root, word=word, index=0,errors=0,max_errors=max_errors,candidates=candidates)
         
         candidates = self.rank_results(candidates)
 
         # only get top k results
         return candidates[:top_k]
     
-    def _fuzzy_search_recursive(self,node: Trienode,word: str,index: int,errors: int,current_word: str,max_errors: int,candidates: list):
+    def _fuzzy_search_recursive(self,node: Trienode,word: str,index: int,errors: int,max_errors: int,candidates: list):
         # stop
         # if errors > max_errors:
         #     return
@@ -98,7 +99,6 @@ class Trie:
                         word=word,
                         index=index,
                         errors=errors + 1,
-                        current_word=current_word + char,
                         max_errors=max_errors,
                         candidates=candidates
                     )
@@ -114,15 +114,14 @@ class Trie:
                 word=word,
                 index=index + 1,
                 errors=errors,
-                current_word=current_word + current_char,
                 max_errors=max_errors,
                 candidates=candidates
             )
         # over error limit
-        if errors == max_errors:
+        if errors > max_errors:
             return
 
-        # thay ký tự (substitution)
+        # substitution
         for char, child in node.children.items():
             if char != current_char:
                 self._fuzzy_search_recursive(
@@ -130,29 +129,27 @@ class Trie:
                     word=word,
                     index=index + 1,
                     errors=errors + 1,
-                    current_word=current_word + char,
                     max_errors=max_errors,
                     candidates=candidates
                 )
 
-        # chèn ký tự (insertion)
+        # insertion
         for char, child in node.children.items():
             self._fuzzy_search_recursive(
                 node=child,
                 word=word,
                 index=index,
                 errors=errors + 1,
-                current_word=current_word + char,
                 max_errors=max_errors,
                 candidates=candidates
             )
-        # xóa ký tự (deletion)
+            
+        # deletion
         self._fuzzy_search_recursive(
             node=node,
             word=word,
             index=index + 1,
             errors=errors + 1,
-            current_word=current_word,
             max_errors=max_errors,
             candidates=candidates
         )
@@ -163,9 +160,6 @@ class Trie:
             return [{"word": "I don't know", "score": 0}]
         
         max_frequency = max(candidate["frequency"] for candidate in candidates)
-        
-        # if max_frequency == 0:
-        #     max_frequency = 1
             
         for candidate in candidates:
             errors = candidate["errors"]
