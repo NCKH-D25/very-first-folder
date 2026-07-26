@@ -1,6 +1,6 @@
 from tries import *
 
-#Varibles
+#Variables
 Data =[]
 Max_Error = 2
 trie = Trie()
@@ -12,7 +12,7 @@ try:
 except FileNotFoundError:
     print("The file does not exist!")
 except Exception as e:
-    print("An unexception error occurred")
+    print("An unexceptional error occurred")
 
 #Handling the Data Lines
 for lines in Data:
@@ -33,11 +33,11 @@ for lines in Data:
         trie.insert(Completed_Word, Current_Weight)
 
 
-#User Inputing vaildation
+#User Inputting validation
 while True:
     User_Input = input("Enter a word: ").lower()
     if User_Input == "" or " " in User_Input or User_Input.isalpha() == False:
-        print("Invaild word! Please try again!")
+        print("Invalid word! Please try again!")
     else:
         res = trie.autocomplete(User_Input)
         if res:
@@ -51,5 +51,5 @@ while True:
                 print("{}".format(res[0]))
                 break
             else:
-                print("Invaild Word! PLease try again!")
+                print("Invalid Word! PLease try again!")
         
