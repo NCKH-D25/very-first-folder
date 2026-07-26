@@ -48,5 +48,5 @@ trie = Trie()
 for i in range(50000):
     trie.insert(Words[i], Available_Weight[i])
     
-ip3 = "we"
-print(trie.autocomplete(ip3))
+test= "teh"
+print(trie.fuzzy_search(test, max_errors=Max_Error))
