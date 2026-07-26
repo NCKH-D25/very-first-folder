@@ -10,7 +10,7 @@
 
 ## Flowchart
 ```mermaid
-flowchart LR
+flowchart TD
     %%Class init
     classDef startEnd fill:#f9f,stroke:#333,stroke-width:2px;
     classDef process fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
@@ -21,7 +21,7 @@ flowchart LR
 
     %%Flowchart
     subgraph Initialization["<font size = 5> <b>Initiating and Reading Dictionary File<b>"]
-        direction LR
+        direction TD
         Start(["Start"]) --> B["Initiate Trie and environment Varibles"]
         B --> C{"Open Dictionary.txt"}
         C --Fail--> D["File Not Found"]
@@ -37,7 +37,7 @@ flowchart LR
     end
     
     subgraph User_Input["<font size = 5> <b> User Input Handling<b>"]
-        direction LR
+        direction TD
         M --> N["User Input Word"]
         N --> O{"Validate Word ? <br>(No Empty, No Space, No number)"}
         O --Fail--> N
@@ -45,7 +45,7 @@ flowchart LR
     end
 
     subgraph Trie_Search["<font size = 5> <b> Finding, processing and suggesting (Trie)"]
-        direction LR
+        direction TD
         P --> Search_1["1. Autocomplete (Trie): Finding by best Prefix"]
         P --> Search_2["2. Fuzzy_search (Trie): Finding by Edit distance"]
         Search_1 --> Result["Calculate Score: <br> Accuracy (Least Error) + Frequency"]
@@ -55,7 +55,7 @@ flowchart LR
     end
 
     subgraph Final_Result["<font size = 5> <b>Final Result<b>"]
-        direction LR
+        direction TD
         Output --> Combine["Compare the result from both method"]
         Combine --> Print["Choose the word with highest score"]
         Print --> Positive_Score{"Score > 0 ?"}
