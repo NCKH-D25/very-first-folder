@@ -75,6 +75,7 @@ File/Function touched: Main.py, while Loop
 Tool: Gemini 3.6 Flash
 Date: 25/7/2026
 Prompt: Fix the logical bug in fuzzy_search function (priorites leastest error and highest frequency)
+Output: A Solution code for logical ranking leatest error and highest frequency.
 What I Modified:
     Before:
         #Only get top k results
@@ -86,3 +87,9 @@ What I Modified:
 File/Function touched: trie.py, fuzzy_search()
 
       
+### Flowchart
+Tool: Gemini 3.6 Flash
+Date: 26/7/2026
+Prompt: Uploaded "Main.py" and "tries.py". Build a flowchart to show the main process of the code
+Output: A Solution code written in Mermaid.js for a comprehensive flowchart showing the overall flow of the code, from loading the dictionary to handling user input and displaying the suggested word.
+Intention: A reference for my flowchart to make sure it cover all the necessary steps.
