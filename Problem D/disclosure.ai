@@ -1,0 +1,47 @@
+### Entry 1
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "For our assigned project, Problem D (C-R-O-S-S-W-O-R-D), what is the most RAM-efficient data structure for loading a full English vocabulary (>150,000 words) into memory? What is the architectural significance of the frequency 'count' variable, and how should recursive wildcard traversal be designed to handle multiple consecutive wildcards without performance degradation?"
+Output summary: The AI provided a deep-dive architectural analysis for Problem D: (1) Recommended implementing a Character Trie using Python's `__slots__` to reduce RAM footprint to ~100MB and ensure Cold Boot loading times remain well under the 2-second threshold. (2) Explained the mechanics of Multi-Wildcard Pruning during recursive tree traversal to naturally terminate invalid character branches early, preventing $26^k$ combinatorial explosion. (3) Proposed an Intersection Pipeline combining a valid English dictionary with raw web frequency data to filter out typos/noise while retaining `count` values for UX-focused Frequency Ranking.
+What I kept vs. changed: Since Problem D was pre-assigned by the instructor, I used this output strictly for conceptual research and architectural planning. I adopted the `__slots__` memory optimization strategy, the Intersection Pipeline data curation logic, and the frequency-based sorting rationale to draft our Phase 2 documentation in README.md.
+Files/functions touched: README.md (Open Architecture Justification section), disclosure.ai
+
+### Entry 2
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "Provide a professional engineering reference for a memory-optimized Character Trie in Python, including PEP-257 compliant docstrings, static type hinting, and architectural justifications for using __slots__ over default dynamic dictionaries."
+Output summary: Reference pattern and complete boilerplate code for TrieNode and CharTrie utilizing __slots__ for RAM optimization, typing annotations (Dict, Optional), and standard software engineering documentation layouts.
+What I kept vs. changed: Used the AI-generated code for TrieNode and CharTrie as-is, including the __slots__ memory optimization pattern and static type hints. I manually reviewed and verified the code structure to ensure it keeps RAM usage bounded under 100MB for Problem D, and refined the inline architectural notes to match our team's specific justification formatting.
+Files/functions touched: trie.py: TrieNode, CharTrie, CharTrie.insert(), CharTrie.count_nodes()
+
+### Entry 3
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "Provide an engineering implementation reference for the recursive wildcard matching engine (predict_wildcard) in Python. How should DFS backtracking be implemented to minimize string allocation overhead, and what is the optimal deterministic tie-breaking logic for frequency sorting?"
+Output summary: Complete code implementation of DFS recursive traversal utilizing mutable character arrays for backtracking, natural Trie branch pruning for wildcard expansion, and lambda-based composite sorting (-frequency, alphabetical) for tie-breaking.
+What I kept vs. changed: Used the AI-generated recursive DFS algorithm and backtracking logic as-is to prevent string immutability overhead during deep tree traversal. Kept the lambda sorting implementation unchanged as it perfectly satisfies our Phase 2 requirement for deterministic frequency ranking and alphabetical tie resolution.
+Files/functions touched: trie.py: CharTrie.predict_wildcard(), CharTrie._search_recursive()
+
+### Entry 4
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "Provide an engineering reference implementation for main.py to serve as the CLI loop and File I/O parser for Problem D. How should Cold Boot time be benchmarked to strictly prove compliance with the Phase 3 (< 2.0 seconds) threshold, and what is the standard exception handling pattern for missing or malformed vocabulary files?"
+Output summary: Complete code implementation for main.py incorporating high-precision benchmarking via time.perf_counter(), robust CSV-like parsing with malformed line skipping, and an interactive terminal interface supporting wildcard queries and clean exit commands.
+What I kept vs. changed: Used the AI-generated main.py code as-is. I manually verified that the exception handling correctly prevents system crashes on malformed data rows, and tested the time.perf_counter() benchmarking logic to confirm our Cold Boot execution consistently registers below the 2.0-second Phase 3 requirement.
+Files/functions touched: main.py: load_dataset(), run_cli(), main()
+
+### Entry 5
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "How can we engineer an automated data pipeline in setup_data.py to generate a hyper-comprehensive dataset (~370,000 words covering modern, archaic, technical, and medical vocabulary) that maintains accurate real-world frequency ranking for UX autocomplete without artificial noise?"
+Output summary: Complete code implementation for a hybrid data enrichment pipeline in setup_data.py. The script cross-references dwyl's 370k master English dictionary with Dr. Peter Norvig's Google Web Trillion Word Corpus (norvig.com/ngrams/count_1w.txt). Words present in the Google corpus receive actual real-world usage counts, while rare/specialized valid dictionary words receive deterministic low baseline frequencies (5-50) to preserve 100% lexical recall without skewing search result rankings.
+What I kept vs. changed: Used the AI-generated hybrid enrichment script as-is. Executed the pipeline to build our local master ~370,000-word dataset.txt file. Verified via main.py that our CharTrie loads the entire comprehensive vocabulary in ~1.3 seconds, successfully achieving Scrabble-level lexical recall with industry-standard Google frequency sorting while strictly beating the Phase 3 Cold Boot threshold (< 2.0s).
+Files/functions touched: setup_data.py: fetch_master_vocabulary(), fetch_norvig_frequencies(), build_hyper_dataset()
+
+### Entry 6
+Tool: Gemini 3.1 Pro
+Date: 2026-07-21
+Prompt(s): "Provide an automated Phase 3 validation suite (test_engine.py) executing the mandatory Sliding Blank Test across End Blank ('pytho_'), Middle Blank ('p_thon'), and Front Blank ('_ython'). How can we structure the benchmark output to formally prove prefix pruning efficiency over brute-force search?"
+Output summary: Complete code implementation for test_engine.py utilizing time.perf_counter() to benchmark execution speed across the three wildcard positions. The script outputs a structured engineering report calculating the exact speedup ratio between End Blank and Front Blank traversal to validate algorithmic pruning.
+What I kept vs. changed: Used the AI-generated validation suite as-is. Executed the suite against our master 370k dataset, confirming that End Blank matching (0.0556 ms) achieves a 1.96x speedup over Front Blank matching (0.1088 ms), formally fulfilling our Phase 3 pass criteria.
+Files/functions touched: test_engine.py: run_sliding_blank_test(), main()

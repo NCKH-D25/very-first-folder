@@ -1,0 +1,101 @@
+# Problem B: The Generational Boss
+
+## 1. Information and rules
+
+- **Định nghĩa các hành động:** Boss và người chơi thực hiện được hành động Attack-Heal-Block, người chơi nhập vào chữ cái đầu đại diện cho hành động đó(A-H-B). Từ đó, ta có vòng tròn counter như sau:
+
+```mermaid
+flowchart TD
+    A((Attack))
+    B((Block))
+    H((Heal))
+
+    %% Vẽ mũi tên và gắn nhãn khắc chế
+    A -->|Counter| H
+    H -->|Counter| B
+    B -->|Counter| A
+
+    %% Phủ màu cho đẹp mắt (Tùy chọn)
+    style A fill:#ff9999,stroke:#333,stroke-width:2px
+    style B fill:#99ccff,stroke:#333,stroke-width:2px
+    style H fill:#99ff99,stroke:#333,stroke-width:2px
+```
+
+## 2. Quy trình dự án
+
+> **Dương(người làm gameloop trong main.py):** Sẽ thực hiện phần này
+
+### Project Files
+
+| File                    | Purpose                                                                                                       |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------ |
+| `main.py`               | Chương trình chính, thực hiện các tác vụ nhập xuất, game loop và gọi thuật toán từ chương trình khác.         |
+| `trie.py`               | Chứa thuật toán cốt lõi: lớp `TrieNode` và `NGramTree` để lưu trữ, đếm tần suất.                              |
+| `disclosure.ai`         | Nhật ký dùng AI.                                                                                              |
+| `README.md`             | Chứa lý luận, các câu hỏi khả biến, hình vẽ workflow,… Nói chung là bất kỳ thông tin nào liên quan tới dự án. |
+| `Exam Translation.docx` | Văn bản dịch từ file Exam gốc để có thể đọc lại luật hoặc thông tin yêu cầu dự án nếu cần.                    |
+
+---
+
+## 3. Vai trò
+
+- **Thành viên 1: Kiến trúc sư Hệ thống & Quản lý Dự án (Tâm)**
+  - Thiết kế cấu trúc tổng thể của dự án và kết nối các module lại với nhau.
+  - Thiết lập quy chuẩn Git, kiểm duyệt các luồng code (Pull Request) để đảm bảo không ai phá hỏng code của ai.
+  - Vẽ lưu đồ Mermaid và chịu trách nhiệm chính về tính minh bạch của tài liệu (`README.md`, `disclosure.ai`).
+  - Hỗ trợ thành viên trong việc viết mã và giải thích.
+- **Thành viên 2: Kỹ sư Dữ liệu (Minh Ánh)**
+  - **Nhiệm vụ:** Tập trung hoàn toàn vào việc xây dựng cấu trúc bộ nhớ. Bạn sẽ viết lớp `TrieNode` và `NGramTree`.
+  - **Mục tiêu:** Đảm bảo bộ đếm tần suất hoạt động chính xác tuyệt đối. Chưa cần quan tâm đến game, chỉ cần nhập thử một mảng chữ cái và cây Trie phải đếm đúng.
+- **Thành viên 3: Gameplay (Dương)**
+  - **Nhiệm vụ:** Xây dựng môi trường chơi trên Terminal. Quản lý việc người chơi nhập lệnh, in kết quả ra màn hình.
+  - **Mục tiêu:** Thiết lập ranh giới rõ ràng giữa Vòng 1 và Vòng 2. Lưu trữ toàn bộ chuỗi ký tự mà người chơi gõ vào một danh sách tạm thời để chuẩn bị giao cho bộ phận xử lý.
+- **Thành viên 4: Trí tuệ Nhân tạo (Trí)**
+  - **Nhiệm vụ:** Cầu nối giữa bộ nhớ của Thành viên 2 và vòng lặp của Thành viên 3. Xây dựng engine `predict_next()`.
+  - **Mục tiêu:** Khi nhận được lịch sử đánh, hàm của bạn phải chui vào cây Trie, tìm ra nút con có tần suất cao nhất. Bạn cũng là người thiết kế "Logic Phân Định Hòa" (Nếu 2 chiêu có xác suất bằng nhau thì Boss sẽ phản đòn chiêu nào? Chọn ngẫu nhiên hay có chủ đích?).
+- **Thành viên 5: Đảm bảo chất lượng (Vy)**
+  - **Nhiệm vụ:** Bạn là người nắm giữ 20% điểm số của cả team. Bạn sẽ viết kịch bản giả lập thói quen người chơi (ít nhất 20 nước đi).
+  - **Mục tiêu:** Chạy 2 bài test sinh tử. Test số 1: Nhập y hệt Vòng 1 xem Boss phản đòn đúng 100% không. Test số 2: Đổi vài chiêu rác nhưng giữ nguyên combo chính, xem Boss có nhận diện được không. Nghĩ ra các Edge testcase có thể xảy ra và báo cáo.
+
+---
+
+## 4. Giai đoạn dự án và checklist nhiệm vụ
+
+### Giai đoạn 1: Khởi tạo
+
+_Ở giai đoạn này, các thành viên bắt đầu tạo khung làm việc độc lập trước khi ráp nối lại với nhau._
+
+- [x] **Tâm (Kiến trúc sư & PM):** Thiết kế cấu trúc tổng thể của dự án. Thiết lập quy chuẩn Git.
+- [ ] **Minh Ánh (Kỹ sư Dữ liệu):** Học về `TrieNode` và `NgramTree`.
+- [ ] **Dương (Gameplay):** Xây dựng môi trường chơi trên Terminal. Bắt đầu quản lý việc in kết quả ra màn hình.
+- [ ] **Trí (AI):** Tìm hiểu về `TrieNode` và `NgramTree` cùng với Minh Ánh.
+- [ ] **Vy (QA):** Bắt đầu viết kịch bản giả lập thói quen người chơi, yêu cầu ít nhất 20 nước đi. Tìm kiếm các trường hợp ngách dễ thấy như “Logic Phân Định Hòa” và báo cáo với team để thống nhất hướng phát triển.
+
+> **Mục tiêu hoàn thành:** Kết thúc bằng cuộc họp mà Trí và Minh Ánh dạy lại thành công kiến thức về TrieNode và NgramTree.
+
+### Giai đoạn 2: It’s time to do something mueheheh
+
+- [ ] **Tâm (Kiến trúc sư & PM):** Kiểm duyệt các luồng code thông qua Pull Request để đảm bảo không ai phá hỏng code của ai. Hỗ trợ thành viên trong việc viết mã và giải thích.
+- [ ] **Minh Ánh (Kỹ sư Dữ liệu):** Tập trung hoàn toàn vào việc xây dựng cấu trúc bộ nhớ. Bắt tay vào viết lớp `TrieNode` và `NGramTree`.
+- [ ] **Dương (Gameplay):** Quản lý việc người chơi nhập lệnh. Thiết lập cơ chế lưu trữ toàn bộ chuỗi ký tự mà người chơi gõ vào một danh sách tạm thời để chuẩn bị giao cho bộ phận xử lý. Phối hợp với Minh Ánh và Trí để thống nhất nên giao tiếp giữa các chương trình như thế nào.
+- [ ] **Trí (AI):** Xây dựng engine `predict_next()`.
+- [ ] **Vy (QA):** Nghĩ ra các Edge testcase có thể xảy ra và báo cáo lại cho team chuẩn bị.
+
+> **Mục tiêu hoàn thành:** Giai đoạn này kết thúc khi chương trình `main.py` và chương trình `trie.py` đã hoàn thiện. Minh Ánh, Dương và Trí sẽ trình bày tại cuộc họp cách các chương trình tương tác với nhau. Vẽ trước bản nháp cách chương trình hoạt động.
+
+### Giai đoạn 3: Ghép
+
+- [ ] **Tâm (Kiến trúc sư & PM):** Trực tiếp kết nối các module lại với nhau.
+- [ ] **Ánh:** Thực hiện thử các bài test từ Vy, sau đó bàn giao chương trình cho Trí.
+- [ ] **Dương:** Bàn giao chương trình cho Trí.
+- [ ] **Trí (AI):** Ghép 2 chương trình được bàn giao lại với nhau. Code để khi nhận được lịch sử đánh, hàm chui vào cây Trie và tìm ra nút con có tần suất cao nhất.
+
+> **Mục tiêu hoàn thành:** Giai đoạn này kết thúc khi Vy chia sẻ màn hình trong cuộc họp, Tiến hành chạy 2 bài test quan trọng nhất được nhắc đến trong tài liệu Notion Exam mà Hiếu gửi. Khi độ chính xác đạt 100% cho 2 test này. Thì giai đoạn này coi như kết thúc.
+
+### Giai đoạn 4: Kiểm Thử
+
+_Mã nguồn đã xong, đây là lúc quyết định team có đạt điểm tuyệt đối hay không._
+
+- [ ] **Vy (QA):** Tiếp tục tìm kiếm thêm các trường hợp ngách nếu có thể.
+- [ ] **Tâm (Kiến trúc sư & PM):** Chịu trách nhiệm chính về tính minh bạch của tài liệu thông qua tệp `README.md` và `disclosure.ai`. Tiến hành vẽ lưu đồ Mermaid.
+- [ ] **Minh Ánh, Dương, Trí:** Sửa lỗi nếu các Edge testcase do Vy báo cáo làm sập hệ thống.
