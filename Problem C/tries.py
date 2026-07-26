@@ -118,7 +118,7 @@ class Trie:
                 candidates=candidates
             )
         # over error limit
-        if errors > max_errors:
+        if errors == max_errors:
             return
 
         # substitution
