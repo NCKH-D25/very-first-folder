@@ -21,6 +21,49 @@ What I Modified:
             print("An unexception error is occurred!")
 File/Function touched: Main.py, try, except and file handling Function
 
+
+Tool: ChatGPT 5.5
+Date: 23/07/2026
+
+Prompt(s): "(Provided the problem statement) I was assigned to build a Trie. I have already built the Trie structure using the `insert()` function. Now I want to complete the Trie implementation, but I am not sure which functions I should add next. Please suggest the necessary functions and explain the purpose of each function so that I can implement them myself."
+
+Output summary: ChatGPT suggested the functions `search()`, `starts_with()`, `get_node()`, and `collect_words()`, and explained the purpose of each function and how they support searching and traversing data in the Trie.
+
+What I Modified:
+	Before: 
+		I had only built the Trie structure and added data using 	`insert()`.
+	After: 
+		I identified the necessary functions to add to the Trie and 	implemented `search()`, `starts_with()`, and `get_node()` myself.
+
+	Files/functions touched: `trie.py`: `search()`, `starts_with()`, 	`get_node()`
+
+
+Tool: ChatGPT 5.5
+Date: 24/07/2026
+Prompt(s): "I have built the Trie structure and completed the basic functions such as `insert()`, `search()`, `starts_with()`, and `get_node()`. Now I want to understand `collect_words()` better. I understand that I need to traverse the child nodes from the current node, but I am not sure how DFS and recursion work to retrieve all the words in the branches. Please explain how `collect_words()` works and provide a short code example to help me understand it"
+
+Output summary: ChatGPT explained how `collect_words()` uses DFS and recursion to traverse the child nodes, check `is_word`, and collect words together with their frequencies. ChatGPT provided the following short code example to demonstrate the basic DFS algorithm:
+
+```python
+def collect_words(self, node, results):
+        if node.is_word:
+            results.append((node.word, node.frequency))
+        for child in node.children.values():
+            self.collect_words(child, results)
+```
+
+After explaining the code and the DFS traversal, ChatGPT suggested building an `autocomplete()` function using `get_node()` together with `collect_words()`.
+
+What I Modified:
+	Before: 
+		I could not clearly visualize how `collect_words()` works or 	how DFS traverses the branches of the Trie.
+	After: 
+		I modified and completed `collect_words()` based on the 	explanation and built the `autocomplete()` function by combining 	`get_node()` and `collect_words()`.
+
+	Files/functions touched: `trie.py`: `collect_words()`, 	`autocomplete()`
+
+
+
 ### Fuzzy Machine
 Tool: ChatGPT-5.5
 Date: 24/7/2026
@@ -54,4 +97,4 @@ What I Modified:
         return [item['word'] for item in candidates[:top_k]]
 File/Function touched: trie.py, fuzzy_search()
 
-        
+      
