@@ -37,6 +37,13 @@ Files/functions touched: <readme.md> : Thêm testcase vào file
 ### Entry 6
 Tool: Gemini 3.1 Pro (High)
 Date: 26/07/2026
-Prompt(s): TÆ° váº¥n cáº¥u trÃºc vÃ²ng láº·p cho VÃ²ng 1 vÃ  VÃ²ng 2 cá»§a Gameplay, quy luáº­t Anti-Exploit, update logic 20 lÆ°á»£t Ä‘áº¥u vÃ  giáº£i Ä‘Ã¡p toÃ¡n há»c N-Gram.
-What I kept vs. changed: Giá»¯ nguyÃªn logic tÃ¡ch hÃ m, tá»± sá»­a láº¡i cÃ¡c cÃ¢u text in ra mÃ n hÃ¬nh cho phÃ¹ há»£p vá»›i thiáº¿t káº¿ cá»§a nhÃ³m. ThÃªm vÃ²ng láº·p cá»‘ Ä‘á»‹nh 20 lÆ°á»£t cho VÃ²ng 2 Ä‘á»ƒ qua Test Case 05.
+Prompt(s): Tư vấn cấu trúc vòng lặp cho Vòng 1 và Vòng 2 của Gameplay, quy luật Anti-Exploit, update logic 20 lượt đấu và giải đáp toán học N-Gram.
+What I kept vs. changed: Giữ nguyên logic tách hàm, tự sửa lại các câu text in ra màn hình cho phù hợp với thiết kế của nhóm. Thêm vòng lặp cố định 20 lượt cho Vòng 2 để qua Test Case 05.
 Files/functions touched: Problem B/gameplay_duong.py, Problem B/disclosure.ai
+
+### Entry 7
+
+Tool: Gemini 3.1 Pro 
+Date: 27/07/2026
+Prompt(s): Dựa vào file gameplay_duong.py, predict.py và trie.py. Hãy thử các testcase ở trong file readme.md. In ra tỉ lệ % đoán đúng của boss từng testcase.
+Files/functions touched: None
