@@ -7,23 +7,23 @@ def get_counter_move(move):
 def get_valid_input():
     valid_moves = ['a', 'd', 'h', 'b']
     while True:
-        move = input("Nhß║¡p n╞░ß╗¢c ─æi cß╗ºa bß║ín (A/D/H/B): ").strip().lower()
+        move = input("Nhap nuoc di cua ban (A/D/H/B): ").strip().lower()
         if move in valid_moves:
             return move
-        print("kh├┤ng hß╗úp lß╗ç. nhß║¡p lß║íi nha")
+        print("Khong hop le. Nhap lai nha.")
 
 def play_round_1(total_turns=20):
-    print("\nV├▓ng 1 : dß╗» liß╗çu")
+    print("\nVong 1 : Thu thap du lieu")
     player_history = []
     
     for turn in range(total_turns):
         boss_move = random.choice(['a', 'd', 'h', 'b'])
-        print(f"\n[L╞░ß╗út {turn + 1}] l╞░ß╗út cß╗ºa boss: {boss_move.upper()}")
+        print(f"\n[Luot {turn + 1}] Luot cua boss: {boss_move.upper()}")
         
         player_move = get_valid_input()
         player_history.append(player_move)
         
-    print("kß║┐t th├║c v├▓ng 1")
+    print("Ket thuc Vong 1")
     return player_history
 
 def play_round_2(predict_function, player_history, total_turns=20):
@@ -44,16 +44,16 @@ def play_round_2(predict_function, player_history, total_turns=20):
         
         player_move = get_valid_input()
         
-        print(f">> l╞░ß╗út cß╗ºa bß║ín: {player_move.upper()} | l╞░ß╗út cß╗ºa boss: {boss_move.upper()}")
+        print(f">> Luot cua ban: {player_move.upper()} | Luot cua boss: {boss_move.upper()}")
         
         if boss_move == get_counter_move(player_move):
-            print("boss thß║»ng , ─æiß╗âm cß╗ºa boss +1")
+            print("Boss thang, diem cua boss +1")
             boss_score += 1
         elif player_move == get_counter_move(boss_move):
-            print("bß║ín thß║»ng, ─æiß╗âm cß╗ºa bß║ín +1")
+            print("Ban thang, diem cua ban +1")
             player_score += 1
             
-        print(f"tß╗òng sß╗æ lß║ºn boss thß║»ng: {boss_score}, tß╗òng sß╗æ lß║ºn bß║ín thß║»ng: {player_score}")
+        print(f"Tong so lan boss thang: {boss_score}, tong so lan ban thang: {player_score}")
         
         player_history.append(player_move)
 
@@ -61,3 +61,11 @@ def play_round_2(predict_function, player_history, total_turns=20):
         print("\nGAME OVER, BOSS WON")
     else:
         print("\nCONGRATULATIONS , YOU WON")
+
+if __name__ == '__main__':
+    def mock_predict(history):
+        return random.choice(['a', 'b', 'h'])
+    print("--- CHAY THU DEMO GAMEPLAY ---")
+    h = play_round_1(total_turns=3)
+    play_round_2(mock_predict, h, total_turns=3)
+
