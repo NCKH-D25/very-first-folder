@@ -1,13 +1,13 @@
 import random
 
 def get_counter_move(move):
-    rules = {'a': 'b', 'h': 'a', 'd': 'h', 'b': 'h'}
+    rules = {'a': 'b', 'h': 'a', 'b': 'h'}
     return rules.get(move, 'a')
 
 def get_valid_input():
-    valid_moves = ['a', 'd', 'h', 'b']
+    valid_moves = ['a', 'h', 'b']
     while True:
-        move = input("Nhap nuoc di cua ban (A/D/H/B): ").strip().lower()
+        move = input("Nhap nuoc di cua ban (A/H/B): ").strip().lower()
         if move in valid_moves:
             return move
         print("Khong hop le. Nhap lai nha.")
@@ -17,7 +17,7 @@ def play_round_1(total_turns=20):
     player_history = []
     
     for turn in range(total_turns):
-        boss_move = random.choice(['a', 'd', 'h', 'b'])
+        boss_move = random.choice(['a', 'h', 'b'])
         print(f"\n[Luot {turn + 1}] Luot cua boss: {boss_move.upper()}")
         
         player_move = get_valid_input()
